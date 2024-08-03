@@ -26,17 +26,27 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: `Hello ${req.query.name} ${yourTime}`});
 });
 
-// app.use("/api/:time", function (req, res, next){
-//   /*
-//   if time matches unixRegex
-//     unixDate = parseInt()
-//   else if time matches dateTimeStringRegex
-//     unixDate = Date.parse()
-//   */
+// app.use(function (req, res, next){
+  
 //   next();
-// }).get(function(req, res){
-//   res.json({"unix": unixDate, "utc": unixDate.toUTCString()})
 // })
+app.get("/api/:time", function(req, res){
+  let unixTimeStamp;
+  let unixDate;
+  let unixNumber = parseInt(req.params.time)
+  let unixString = Date.parse(req.params.time)
+  const unixRegex = /^\d{13}$/
+  const dateTimeStringRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/
+
+  if (unixRegex.test(unixNumber)){
+    unixTimeStamp = unixNumber;
+    unixDate = new Date(unixNumber).toUTCString();
+  } else if (unixRegex.test(unixString)){
+    unixTimeStamp = unixString;
+    unixDate = new Date(unixString).toUTCString();
+  }
+  res.json({"unix": unixTimeStamp, "utc": unixDate})
+})
 
 // .get(function(req, res, next) {
 //   const timeToNum = parseInt(req.params.time);
