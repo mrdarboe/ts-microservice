@@ -21,11 +21,60 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+  const yourTime = new Date(1722665339652);
+
+  res.json({greeting: `Hello ${req.query.name} ${yourTime}`});
 });
 
+// app.use("/api/:time", function (req, res, next){
+//   /*
+//   if time matches unixRegex
+//     unixDate = parseInt()
+//   else if time matches dateTimeStringRegex
+//     unixDate = Date.parse()
+//   */
+//   next();
+// }).get(function(req, res){
+//   res.json({"unix": unixDate, "utc": unixDate.toUTCString()})
+// })
 
+// .get(function(req, res, next) {
+//   const timeToNum = parseInt(req.params.time);
+//   const unixTime = new Date(timeToNum);
+//   res.json({"unix": timeToNum, "utc": unixTime.toUTCString()})
+// }).get(function(req, res) {
+//   const unixDate = Date.parse(req.params.time);
+//   const utcDate = new Date(unixDate);
+//   res.json({"unix": unixDate, "utc": utcDate.toUTCString()})
+// });
 
+// app.get(function(req, res) {
+//   const timeToNum = parseInt(req.params.time);
+//   const unixTime = new Date(timeToNum);
+//   res.json({"unix": timeToNum, "utc": unixTime.toUTCString()})
+// })
+
+// app.get("/api/:time", function(req, res) {
+//   const unixDate = Date.parse(req.params.time);
+//   const utcDate = new Date(unixDate);
+//   res.json({"unix": unixDate, "utc": utcDate.toUTCString()})
+//   // console.log(req.params.time);
+//   // console.log(1451001600000);
+// })
+
+/*
+1451001600000
+1722665339652
+  get at /api/:time (req.param,)
+  if req = 0
+    current time
+  else
+    check req validity
+    if correct
+      res object unix: reqparam convert to unix time, utc: reqparam convert to utcTime
+    else
+      res invalidTime
+*/
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
