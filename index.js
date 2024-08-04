@@ -30,12 +30,17 @@ app.get("/api/hello", function (req, res) {
   
 //   next();
 // })
-app.get("/api/:time", function(req, res){
+app.get("/api/:time?", function(req, res){
+  let time = req.params.time;
+
   let unixTimeStamp;
   let unixDate;
 
-  let queryDate = Date.parse(req.params.time);
-  
+  if (!time){
+    res.json({"unix": Date.now(), "utc": new Date().toUTCString()});
+  } else {
+    let queryDate = Date.parse(req.params.time);
+
   const unixRegex = /^\d{1,4}$/
   const unixFormat = /^\d{1,13}$/
 
@@ -61,6 +66,7 @@ app.get("/api/:time", function(req, res){
     res.json({"unix": unixTimeStamp, "utc": unixDate})
   } else {
     res.json({"error": "Invalid Date"})
+  }
   }
   
 })
