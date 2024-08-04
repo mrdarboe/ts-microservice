@@ -35,19 +35,22 @@ app.get("/api/:time", function(req, res){
   let unixDate;
   let unixNumber = parseInt(req.params.time)
   let unixString = req.params.time; //Date.parse(req.params.time)
-  const unixRegex = /^\d{13}$/
-  const dateTimeStringRegex = /^\d{4}-\d{2}-\d{2}$/
+  const unixRegex = /^\d+$/
+  const dateTimeStringRegex = /^\d{4}-\d{2}-\d{2}$/ // /^(?:[1-9]\d{0,12}|0)$/
 
-  if (unixRegex.test(unixNumber)){
-    unixTimeStamp = unixNumber;
-    unixDate = new Date(unixNumber).toUTCString();
-  } else if (dateTimeStringRegex.test(unixString)){
+  if (dateTimeStringRegex.test(unixString)){
     unixTimeStamp = Date.parse(unixString);
     unixDate = new Date(unixString).toUTCString();
+  } else if (unixRegex.test(unixNumber)){
+    unixTimeStamp = unixNumber;
+    unixDate = new Date(unixNumber).toUTCString();
+  } else {
+    unixTimeStamp = undefined;
+    unixDate = undefined;
   }
 
   if (unixTimeStamp != undefined && unixDate != undefined){
-    res.json({"unix": typeof unixTimeStamp, "utc": typeof unixDate})
+    res.json({"unix": unixTimeStamp, "utc": unixDate})
   } else {
     res.json({"error": "Invalid Date"})
   }
