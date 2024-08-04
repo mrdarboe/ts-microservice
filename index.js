@@ -35,12 +35,9 @@ app.get("/api/:time", function(req, res){
   let unixDate;
 
   let queryDate = Date.parse(req.params.time);
-
-  // let unixNumber = parseInt(req.params.time)
-  // let unixString = req.params.time; //Date.parse(req.params.time)
+  
   const unixRegex = /^\d{1,4}$/
   const unixFormat = /^\d{1,13}$/
-  // const dateTimeStringRegex = /^\d{4}-\d{2}-\d{2}$/ // /^(?:[1-9]\d{0,12}|0)$/
 
   if (unixFormat.test(queryDate)){
     if (!isNaN(queryDate) && !unixRegex.test(req.params.time)){
@@ -68,33 +65,7 @@ app.get("/api/:time", function(req, res){
   
 })
 
-// .get(function(req, res, next) {
-//   const timeToNum = parseInt(req.params.time);
-//   const unixTime = new Date(timeToNum);
-//   res.json({"unix": timeToNum, "utc": unixTime.toUTCString()})
-// }).get(function(req, res) {
-//   const unixDate = Date.parse(req.params.time);
-//   const utcDate = new Date(unixDate);
-//   res.json({"unix": unixDate, "utc": utcDate.toUTCString()})
-// });
-
-// app.get(function(req, res) {
-//   const timeToNum = parseInt(req.params.time);
-//   const unixTime = new Date(timeToNum);
-//   res.json({"unix": timeToNum, "utc": unixTime.toUTCString()})
-// })
-
-// app.get("/api/:time", function(req, res) {
-//   const unixDate = Date.parse(req.params.time);
-//   const utcDate = new Date(unixDate);
-//   res.json({"unix": unixDate, "utc": utcDate.toUTCString()})
-//   // console.log(req.params.time);
-//   // console.log(1451001600000);
-// })
-
 /*
-1451001600000
-1722665339652
   get at /api/:time (req.param,)
   if req = 0
     current time
